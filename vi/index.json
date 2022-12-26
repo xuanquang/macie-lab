@@ -1,0 +1,50 @@
+[
+{
+	"uri": "/vi/1-introduce/",
+	"title": "Giới thiệu Amazon Macie",
+	"tags": [],
+	"description": "",
+	"content": "Amazon Macie Amazon Macie là một dịch vụ bảo mật dữ liệu được quản lý hoàn toàn, sử dụng công nghệ máy học và đối sánh mẫu (pattern matching) để khám phá và bảo vệ dữ liệu nhạy cảm của bạn trong AWS.\nAmazon Macie tự động hóa việc khám phá dữ liệu nhạy cảm (sensitive data) trên quy mô lớn và giảm chi phí bảo vệ dữ liệu của bạn. Macie tự động cung cấp danh sách các Amazon S3 buckets, bao gồm các buckets không được mã hóa, các buckets có thể truy cập công khai và các buckets được chia sẻ ra bên ngoài những tài khoản bạn đã xác định trong AWS Organizations.\nSau đó, với các buckets bạn chọn, Macie áp dụng kỹ thuật máy học và đối sánh mẫu để xác định và cảnh báo bạn về dữ liệu nhạy cảm, chẳng hạn như thông tin nhận dạng cá nhân (personally identifiable information , PII). Ví dụ: thông tin sức khỏe cá nhân, thông tin tài chính hoặc thông tin xác thực.\nMacie tạo ra các phát hiện có thể hành động (actionable findings ) để cảnh báo bạn về dữ liệu nhạy cảm có thể được tìm kiếm, lọc và tích hợp vào quy trình làm việc hoặc hệ thống quản lý sự kiện hiện có của bạn. Vì vậy, bạn có thể nhanh chóng phản hồi để Macie liên tục thêm vào danh sách các loại dữ liệu nhạy cảm.\nCảnh báo hoặc phát hiện của Macie có thể được tìm kiếm và lọc trong AWS Management Console và được gửi đến Amazon EventBridge, trước đây được gọi là Amazon CloudWatch Events, để dễ dàng tích hợp với quy trình làm việc hoặc hệ thống quản lý sự kiện hiện có hoặc được sử dụng kết hợp với các dịch vụ AWS khác, chẳng hạn như như AWS Step Functions để tự động thực hiện các hành động phục hồi. Điều này có thể giúp bạn đáp ứng các quy định, chẳng hạn như Đạo luật về trách nhiệm giải trình và cung cấp bảo hiểm y tế (HIPAA) và Quy định chung về quyền riêng tư của dữ liệu (GDPR). Bạn có thể bắt đầu với Amazon Macie bằng cách tận dụng bản dùng thử miễn phí 30 ngày để đánh giá buckets.\nBạn cũng có thể xác định các loại dữ liệu của riêng mình bằng cách tùy chỉnh chúng cho phù hợp với đặc thù doanh nghiệp của bạn với hỗ trợ nhiều tài khoản sử dụng AWS Organizations.\nVới Amazon Macie, bạn có thể nhanh chóng bắt đầu khám phá và bảo vệ dữ liệu nhạy cảm của mình trên quy mô lớn.\nTìm hiểu thêm về Amazon Macie tại: https://aws.amazon.com/macie\n"
+},
+{
+	"uri": "/vi/",
+	"title": "Giới thiệu về bài lab này",
+	"tags": [],
+	"description": "",
+	"content": "Giới thiệu về bài lab này Tổng thể Trong bài lab này, bạn sẽ dùng dịch vụ Amazon Macie để ngăn chặn vi phạm dữ liệu trong công ty của bạn bằng một tình huống giả định.\nLưu ý: Nếu tài nguyên bạn sử dụng cho bài lab này không bị xóa, bạn sẽ phải trả phí trên tài khoản AWS của bạn.\nContent Giới thiệu Chuẩn bị Bắt đầu với Amazon Macie Dọn dẹp tài nguyên "
+},
+{
+	"uri": "/vi/2-pre-requisite/",
+	"title": "Chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "Kịch bản Bạn có một S3 bucket tên là maciehandsondemo193. Tên của bucket phải là duy nhất (xem Quy tắc đặt tên nhóm). Do đó, bạn sẽ sử dụng tên khác cho S3 bucket của mình.\nTheo chính sách của doanh nghiệp bạn, bạn cần đảm bảo rằng không có file nào được tải lên bucket này có thông tin ID nhân viên. Để làm được, bạn cần đưa ra giải pháp có thể theo dõi bucket này mỗi ngày và tìm kiếm thông tin PII cụ thể.\nCó ai đó trong đội của bạn đã tải lên một file csv chứa thông tin nhân viên bao gồm cả ID nhân viên của họ.\nBạn cần tạo một Macie job để xác định vi phạm dữ liệu này.\nChuẩn bị Tạo một S3 bucket có tên là maciehandsondemo193. Tạo một csv có tên pii.csv với 8 bản ghi (record) được đề cập bên dưới và tải lên S3 bucket mới tạo. ID nhân viên được xem là PII trong bài lab này. Và ID nhân viên có định danh cụ thể:\nHai ký tự đầu tiên là chữ cái; Bốn ký tự cuối cùng là chữ số.\nBạn sẽ tạo một mẫu RegEx (Regular Expression, biểu thức chính quy). Nếu công ty bạn có định dạng khác cho ID nhân viên, hãy tận dụng định dạng đó. (Trong bài lab này, RegEx của ID nhân viên là [a-z]{2}-[0-9]{4})\nĐể tải xuống file pii.csv, bạn click vào đây, nhấp chuột phải vào nút Raw ở đầu file, chọn Save Link As…, rồi chọn nơi bạn muốn lưu file trên máy tính của bạn, chọn Save.\nCho phép Macie Mở giao diện quản lý Amazon Macie Chọn Get starter. Chọn Enable Macie. "
+},
+{
+	"uri": "/vi/3-macie/",
+	"title": "Bắt đầu với Amazon Macie",
+	"tags": [],
+	"description": "",
+	"content": "TẠO MỘT MACIE JOB Click vào nút Create job . Chọn S3 bucket có tên là maciehandsondemo193, click Next. Click Next. Ở bước này (Refine the scope), có 2 lựa chọn. Trong bài lab này, bạn chọn One-time job. Nhưng trong thực tế, có thể bạn sẽ chọn Scheduled job.\nMở rộng Additional settings:\nChọn File name extensions Nhập csv Rồi click Include Lăn chuột và click Next. Click Next. Chúng ta sẽ tạo ra một custom identifier. Hãy nhớ rằng ID nhân viên được xem như thông tin PII.\nClick Manage custom identifiers. Trình duyệt của bạn sẽ mở 1 tab mới. Ở tab mới này, click Create và nhập: Name: EmpID Regular expression: [a-z]{2}-[0-9]{4} Rồi click Submit.\nTrở lại giao diện quản lý của Macie, chọn EmpID và click Next. Click Next. Name and description\nJob name: EmpID Then click Next. Click Submit. EmpID Job sẽ bắt đầu chạy. Sẽ mất một khoảng thời gian để bắt đầu chạy, khoảng 7-10 phút.\nJob của chúng ta đã hoàn tất, mất khoảng 10 phút. Bây giờ chúng ta sẽ xem qua những phát hiện của nó. Click vào Show results rồi click Show findings\nTrình duyệt sẽ mở 1 tab mới. Ở tab mới này, chọn kết quả, click Export to JSON. Ngay lập tức bạn có thể xem các phát hiện. Bạn click Download để tải file JSON nếu muốn.\nSau khi xem xét các phát hiện, bạn có thể thực hiện hành động phù hợp đối với file csv (pii.csv). HỦY MACIE JOB Bạn chọn EmpID Job, click Actions rồi click Cancel. "
+},
+{
+	"uri": "/vi/4-cleanup/",
+	"title": "Dọn dẹp tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Để xóa những tài nguyên chúng ta đã tạo trong suốt bài lab này, chúng ta sẽ làm những bước sau đây.\nVô hiệu hóa Macie Mở giao diện quản lý Macie, click Settings. Click nút Disable Macie . Nhập Disable rồi click Disable. Xóa S3 bucket Mở giao diện quản lý S3. Chọn S3 bucket có tên maciehandsondemo193, click Empty. Nhập permanently delete và click Empty. Chọn S3 bucket có tên là maciehandsondemo193, và click Delete. Nhập maciehandsondemo193 rồi click Delete bucket. "
+},
+{
+	"uri": "/vi/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/vi/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

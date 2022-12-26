@@ -1,0 +1,50 @@
+[
+{
+	"uri": "/",
+	"title": "About this lab",
+	"tags": [],
+	"description": "",
+	"content": "About this lab Overall In this lab, you will use the Amazon Macie service to prevent the breach of data in your company with a scenario example.\nImportant: If the resources that you use for this lab are left undeleted, you will incur charges on your AWS account. Content Introduction Pre-requisite Getting Started with Amazon Macie Clean up resources "
+},
+{
+	"uri": "/1-introduce/",
+	"title": "Introducing Amazon Macie",
+	"tags": [],
+	"description": "",
+	"content": "Amazon Macie Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.\nAmazon Macie automates the discovery of sensitive data at scale and lowers the cost of protecting your data. Macie automatically provides an inventory of Amazon S3 buckets including a list of unencrypted buckets, publicly accessible buckets, and buckets shared with AWS accounts outside those you have defined in AWS Organizations. Then, Macie applies machine learning and pattern-matching techniques to the buckets you select to identify and alert you to sensitive data, such as personally identifiable information (PII). Example: personal health information, financial information, or credentials\nMacie then generates actionable findings to alert you to sensitive data that can be searched, filtered and integrated into your existing workflow or event management systems. So you can quickly respond Macie continually adds to its list of sensitive data types.\nMacie’s alerts, or findings, can be searched and filtered in the AWS Management Console and sent to Amazon EventBridge, formerly called Amazon CloudWatch Events, for easy integration with existing workflow or event management systems, or to be used in combination with AWS services, such as AWS Step Functions to take automated remediation actions. This can help you meet regulations, such as the Health Insurance Portability and Accountability Act (HIPAA) and General Data Privacy Regulation (GDPR). You can get started with Amazon Macie by leveraging the 30-day free trial for bucket evaluation.\nYou can also define your own data types customizing them to your unique business with native multi-account support using AWS Organizations.\nWith Amazon Macie, you can quickly get started discovering and protecting your sensitive data at scale.\nLearn more about Amazon Macie at: https://aws.amazon.com/macie "
+},
+{
+	"uri": "/2-pre-requisite/",
+	"title": "Pre-requisite",
+	"tags": [],
+	"description": "",
+	"content": "Scenario You have a S3 bucket named maciehandsondemo193. The name of the bucket must be unique (view Bucket naming rules). You will use another name for your S3 bucket.\nAnd as per your organization\u0026rsquo;s policy, you need to ensure that no files uploaded to this bucket have Employee ID info. In order to do the same you need to come up with a solution that can monitor this bucket on daily basis and look for specific PII info.\nSomeone from your team uploads a csv file containing employee info including their Employee ID.\nYou need to create a Macie job to identify this data breach.\nPre-requisite Create a S3 bucket named maciehandsondemo193. Create a csv named pii.csv with the 8 records mentioned below and upload it to the above S3 bucket. Employee ID is treated as PII information in this lab. And the employee id has a specific format:\nThe first two characters are letters; The last four characters are numbers.\nBecause we go further ahead you will be creating a RegEx (Regular Expression) pattern. If your company has a different format for employee id, feel free to leverage that format as well. (In this lab, RegEx of Employee ID is [a-z]{2}-[0-9]{4})\nTo download the file pii.csv, you click here, right-click the Raw button at the top of the file, select Save Link As…, choose the location on your computer where you want to save the file, and select Save.\nEnable Macie Open the Amazon Macie Choose Get starter. Choose Enable Macie. "
+},
+{
+	"uri": "/3-macie/",
+	"title": "Getting Started with Amazon Macie",
+	"tags": [],
+	"description": "",
+	"content": "CREATE A MACIE JOB Click Create job button. Select the S3 bucket named maciehandsondemo193, click Next. Click Next. At this step (Refine the scope), there are two options. In this lab, you choose One-time job. But in your real life, maybe you will select Scheduled job.\nExpand Additional settings:\nChoose File name extensions Type csv Then click the Include button Scroll down and click Next. Click Next. We have to create a custom identifier. Remember, the Employee ID is treated as PII information.\nClick Manage custom identifiers. Your browser will open new tab. At this new tab, click the Create button and input: Name: EmpID Regular expression: [a-z]{2}-[0-9]{4} Then click Submit.\nBack to Macie\u0026rsquo;s console, select EmpID and click Next. Click Next. Name and description\nJob name: EmpID Then click Next. Click Submit. The EmpID Job will be running. Will take some time so run has started, takes about a few minutes (7-10 min).\nOur job has just compleled and it took about 10 min.\nOk now let us look at its findings. Click on Show results and then click Show findings Our browser will open a new tab. In the new tab, select the result, click Export to JSON. You will be able to see it right here. Click Download if you want.\nAfter reviewing the findings, you can take appropriate action on the csv file data (pii.csv). CANCEL MACIE JOB You select the EmpID Job, click Actions and then click Cancel. "
+},
+{
+	"uri": "/4-cleanup/",
+	"title": "Clean up resources",
+	"tags": [],
+	"description": "",
+	"content": "To delete the resources we created during this workshop, we will do the following.\nDisable Macie Open the Amazon Macie console, click Settings. Click the Disable Macie button. Type Disable and then click Disable. Delete the S3 bucket Open the Amazon S3 console. Select the S3 bucket named maciehandsondemo193, click Empty. Type permanently delete and click Empty. Select the S3 bucket named maciehandsondemo193, click Delete. Type maciehandsondemo193 and click Delete bucket. "
+},
+{
+	"uri": "/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
